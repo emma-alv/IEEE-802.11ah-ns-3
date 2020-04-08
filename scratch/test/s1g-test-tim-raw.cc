@@ -1166,7 +1166,7 @@ int main(int argc, char *argv[]) {
 	config = Configuration(argc, argv);
 
 	config.rps = configureRAW(config.rps, config.RAWConfigFile);
-	config.Nsta = config.NRawSta;
+	//config.Nsta = config.NRawSta;
 
 	configurePageSlice ();
 	configureTIM ();
@@ -1518,9 +1518,9 @@ int main(int argc, char *argv[]) {
     risultati << "Sta node#,distance,timerx(notassociated),timeidle(notassociated),timetx(notassociated),timesleep(notassociated),timecollision(notassociated)" << std::endl;
     int i = 0;
     string spazio = ",";
-    
+
     while (i < config.Nsta) {
-        
+
         risultati << i << spazio << dist[i] << spazio << timeRxArray[i].GetSeconds() << ",(" << timeRxNotAssociated[i].GetSeconds() << ")," << timeIdleArray[i].GetSeconds() << ",(" << timeIdleNotAssociated[i].GetSeconds() << ")," << timeTxArray[i].GetSeconds() << ",(" << timeTxNotAssociated[i].GetSeconds() << ")," << timeSleepArray[i].GetSeconds() << ",(" << timeSleepNotAssociated[i].GetSeconds() << ")," << timeCollisionArray[i].GetSeconds() << ",(" << timeCollisionNotAssociated[i].GetSeconds() << ")" << std::endl;
         /*
          cout << "================== Sleep " << stats.get(i).TotalSleepTime.GetSeconds() << endl;
@@ -1530,7 +1530,7 @@ int main(int argc, char *argv[]) {
          cout << "ooooooooooooooooooo TOTENERGY " <<  stats.get(i).GetTotalEnergyConsumption() << " mW" << endl;
          cout << "Rx+Idle ENERGY " <<  stats.get(i).EnergyRxIdle << " mW" << endl;
          cout << "Tx ENERGY " <<  stats.get(i).EnergyTx << " mW" << endl;*/
-        
+
         i++;
     }
 

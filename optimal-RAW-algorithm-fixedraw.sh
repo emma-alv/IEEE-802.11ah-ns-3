@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -ne 5 ]
+if [ $# -ne 6 ]
 then
 echo "parameters missing"
 exit 1
@@ -24,6 +24,7 @@ payloadSize=256
 
 NRawGroups=$4 #one raw group occupying the whole beacon
 NumSlot=$5
+pageSliceCount=$6
 
 
 
@@ -33,7 +34,7 @@ DataMode="MCS2_0"
 datarate=7.8
 bandWidth=2
 S1g1MfieldEnabled=false
-
+pageSliceLen=1
 
 
 udpStart=0
@@ -42,7 +43,7 @@ tcpipcameraStart=$(($NumSta - 8))
 tcpipcameraEnd=$(($NumSta - 1))
 #at least one udp
 
-rho="50"
+rho="200"
 
 
 
@@ -102,17 +103,11 @@ RAWConfigFile="./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot.txt"
 
 if [ ! -f OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot.txt ]
 then
-./waf --run "RAW-generate --NRawSta=$NumSta --NGroup=$NRawGroups --NumSlot=$NumSlot --RAWConfigPath=$RAWConfigFile --beaconinterval=$BeaconInterval"
+#./waf --run "RAW-generate --NRawSta=$NumSta --NGroup=$NRawGroups --NumSlot=$NumSlot --RAWConfigPath=$RAWConfigFile --beaconinterval=$BeaconInterval"
+./waf --run "RAW-generate --NRawSta=$NumSta --NGroup=$NRawGroups --NumSlot=$NumSlot --RAWConfigPath=$RAWConfigFile --beaconinterval=$BeaconInterval --pageSliceCount=$pageSliceCount --pageSliceLen=$pageSliceLen"
 fi
 
 
 #./waf --run "test --seed=$seed --simulationTime=$simTime --payloadSize=$payloadSize --Nsta=$totalSta --NRawSta=$totalRawstas --BeaconInterval=$BeaconInterval --DataMode=$DataMode --datarate=$datarate  --bandWidth=$bandWidth  --rho=$rho  --TrafficPath=$TrafficPath --S1g1MfieldEnabled=$S1g1MfieldEnabled  --RAWConfigFile=$RAWConfigFile --NRawSlotNum=$NumSlot --NGroup=$NRawGroups --totaltraffic=$traffic --tcpipcameraStart=$tcpipcameraStart --tcpipcameraEnd=$tcpipcameraEnd --udpStart=$udpStart --udpEnd=$udpEnd"  #> ./OptimalRawGroup/traffic-$traffic/NRawGroups$NRawGroups-NumSlot$NumSlot/simResult-$NumSta-seed$seed/simlog.txt 2>&1
 
-./waf --run "test --seed=$seed --simulationTime=$simTime --payloadSize=$payloadSize --Nsta=$totalSta --NRawSta=$totalRawstas --BeaconInterval=$BeaconInterval --DataMode=$DataMode --datarate=$datarate  --bandWidth=$bandWidth --rho=$rho --Outputpath=$Outputpath --S1g1MfieldEnabled=$S1g1MfieldEnabled --RAWConfigFile=$RAWConfigFile --TrafficPath=$TrafficPath" > ./OptimalRawGroup/traffic-$traffic/NRawGroups$NRawGroups-NumSlot$NumSlot/simResult-$NumSta-seed$seed/simlog.txt 2>&1
-
-
-
-
-
-
-
+./waf --run "test --seed=$seed --simulationTime=$simTime --payloadSize=$payloadSize --Nsta=$totalSta --NRawSta=$totalRawstas --BeaconInterval=$BeaconInterval --DataMode=$DataMode --datarate=$datarate  --bandWidth=$bandWidth --rho=$rho --NGroup=$NRawGroups --NRawSlotNum=$NumSlot --pageSliceCount=$pageSliceCount --pageSliceLength=$pageSliceLen --Outputpath=$Outputpath --S1g1MfieldEnabled=$S1g1MfieldEnabled --RAWConfigFile=$RAWConfigFile --TrafficPath=$TrafficPath" > ./OptimalRawGroup/traffic-$traffic/NRawGroups$NRawGroups-NumSlot$NumSlot/simResult-$NumSta-seed$seed/simlog.txt 2>&1

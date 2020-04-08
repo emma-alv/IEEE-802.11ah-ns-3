@@ -159,7 +159,7 @@ ApWifiMac::GetTypeId (void)
                    UintegerValue (4),
                    MakeUintegerAccessor (&ApWifiMac::GetDTIMPeriod,
                                          &ApWifiMac::SetDTIMPeriod),
-                   MakeUintegerChecker<uint8_t> ()); 
+                   MakeUintegerChecker<uint8_t> ());
        */
   return tid;
 }
@@ -255,39 +255,39 @@ ApWifiMac::GetBeaconInterval (void) const
   NS_LOG_FUNCTION (this);
   return m_beaconInterval;
 }
-    
+
 uint32_t
 ApWifiMac::GetRawGroupInterval (void) const
 {
   NS_LOG_FUNCTION (this);
   return m_rawGroupInterval;
 }
-  
+
 uint32_t
 ApWifiMac::GetTotalStaNum (void) const
 {
   NS_LOG_FUNCTION (this);
   return m_totalStaNum;
 }
-    
+
 uint32_t
 ApWifiMac::GetSlotFormat (void) const
 {
     return m_SlotFormat;
 }
-    
+
 uint32_t
 ApWifiMac::GetSlotCrossBoundary (void) const
 {
     return  m_slotCrossBoundary;
 }
-    
+
 uint32_t
 ApWifiMac::GetSlotDurationCount (void) const
 {
     return m_slotDurationCount;
 }
-    
+
 uint32_t
 ApWifiMac::GetSlotNum (void) const
 {
@@ -295,19 +295,19 @@ ApWifiMac::GetSlotNum (void) const
 }
 
 
-uint8_t 
+uint8_t
 ApWifiMac::GetDTIMPeriod (void) const
 {
     return m_DTIMPeriod;
 }
 
-void 
+void
 ApWifiMac::SetDTIMPeriod (uint8_t period)
 {
     m_DTIMPeriod = period;
     //m_DTIMOffset = m_DTIMPeriod - 1;
 }
-    
+
 
 void
 ApWifiMac::SetWifiRemoteStationManager (Ptr<WifiRemoteStationManager> stationManager)
@@ -347,7 +347,7 @@ ApWifiMac::SetRawGroupInterval (uint32_t interval)
   NS_LOG_FUNCTION (this << interval);
   m_rawGroupInterval = interval;
 }
-    
+
 void
 ApWifiMac::SetTotalStaNum (uint32_t num)
 {
@@ -355,30 +355,30 @@ ApWifiMac::SetTotalStaNum (uint32_t num)
   m_totalStaNum = num;
   //m_S1gRawCtr.RAWGroupping (m_totalStaNum, 1, m_beaconInterval.GetMicroSeconds ());
   //m_S1gRawCtr.configureRAW ();
-    
+
 }
-    
+
 void
 ApWifiMac::SetSlotFormat (uint32_t format)
 {
     NS_ASSERT (format <= 1);
     m_SlotFormat = format;
 }
-    
+
 void
 ApWifiMac::SetSlotCrossBoundary (uint32_t cross)
 {
     NS_ASSERT (cross <= 1);
     m_slotCrossBoundary = cross;
 }
-    
+
 void
 ApWifiMac::SetSlotDurationCount (uint32_t count)
 {
     NS_ASSERT((!m_SlotFormat & (count < 256)) || (m_SlotFormat & (count < 2048)));
     m_slotDurationCount = count;
 }
-    
+
 void
 ApWifiMac::SetSlotNum (uint32_t count)
 {
@@ -618,7 +618,7 @@ ApWifiMac::GetSlotStartTimeFromAid (uint16_t aid) const
 	// For station that does not belong to anz RAW group, return the time after all RAW groups
 	/*currentRAW_start += (500 + slotDurationCount * 120) * slotNum;
 	NS_LOG_DEBUG ("[aid=" << aid << "] is located outside all RAWs. It can start contending " << currentRAW_start << " us after the beacon.");*/
-	NS_ASSERT (x);
+	//NS_ASSERT (x);
 	return MicroSeconds (currentRAW_start);
 }
 
@@ -762,7 +762,7 @@ ApWifiMac::SendAssocResp (Mac48Address to, bool success, uint8_t staType)
   hdr.SetDsNotTo ();
   Ptr<Packet> packet = Create<Packet> ();
   MgtAssocResponseHeader assoc;
-  
+
   uint8_t mac[6];
   to.CopyTo (mac);
   uint8_t aid_l = mac[5];
@@ -790,7 +790,7 @@ ApWifiMac::SendAssocResp (Mac48Address to, bool success, uint8_t staType)
     }
     //NS_LOG_UNCOND ("ApWifiMac::SendAssocResp =" );
 
-   
+
   if (m_s1gSupported && success)
     {
       assoc.SetS1gCapabilities (GetS1gCapabilities ());
@@ -804,7 +804,7 @@ ApWifiMac::SendAssocResp (Mac48Address to, bool success, uint8_t staType)
             }
           m_sensorList.push_back (aid);
           NS_LOG_INFO ("m_sensorList =" << m_sensorList.size ());
-  
+
         }
        else if (staType == 2)
         {
@@ -860,10 +860,10 @@ ApWifiMac::HasPacketsToBlock (uint16_t blockInd , uint16_t PageInd)
 {
     uint16_t sta_aid, subblock, block;
     uint8_t blockBitmap;
-    
+
     blockBitmap = 0;
     block = (PageInd << 11) | (blockInd << 6); // TODO check
-   
+
     for (uint16_t i = 0; i <= 7; i++) //8 subblock in each block.
      {
        subblock = block | (i << 3);
@@ -881,7 +881,7 @@ ApWifiMac::HasPacketsToBlock (uint16_t blockInd , uint16_t PageInd)
             }
         }
      }
-  
+
     return blockBitmap;
 }
 
@@ -891,34 +891,34 @@ ApWifiMac::HasPacketsToSubBlock (uint16_t subblockInd, uint16_t blockInd , uint1
     uint16_t sta_aid, subblock;
     uint8_t subblockBitmap;
     subblockBitmap = 0;
-  
+
     subblock = (PageInd << 11) | (blockInd << 6) | (subblockInd << 3);
     for (uint16_t j = 0; j <= 7; j++) //8 stations in each subblock
         {
            sta_aid = subblock | j;
            if (m_stationManager->IsAssociated (m_AidToMacAddr.find(sta_aid)->second) && HasPacketsInQueueTo(m_AidToMacAddr.find(sta_aid)->second) )
              {
-               subblockBitmap = subblockBitmap | (1 << j); 
+               subblockBitmap = subblockBitmap | (1 << j);
                m_sleepList[m_AidToMacAddr.find(sta_aid)->second]=false;
-             } 
+             }
         }
     return subblockBitmap;
 }
-    
 
-bool 
-ApWifiMac::HasPacketsInQueueTo(Mac48Address dest) 
-{           
+
+bool
+ApWifiMac::HasPacketsInQueueTo(Mac48Address dest)
+{
     //check also if ack received
     Ptr<const Packet> peekedPacket_VO, peekedPacket_VI, peekedPacket_BE, peekedPacket_BK;
     WifiMacHeader peekedHdr;
     Time tstamp;
-        
+
     peekedPacket_VO = m_edca.find(AC_VO)->second->GetEdcaQueue()->PeekByAddress (WifiMacHeader::ADDR1, dest);
     peekedPacket_VI = m_edca.find(AC_VI)->second->GetEdcaQueue()->PeekByAddress (WifiMacHeader::ADDR1, dest);
     peekedPacket_BE = m_edca.find(AC_BE)->second->GetEdcaQueue()->PeekByAddress (WifiMacHeader::ADDR1, dest);
     peekedPacket_BK = m_edca.find(AC_BK)->second->GetEdcaQueue()->PeekByAddress (WifiMacHeader::ADDR1, dest);
-        
+
     if (peekedPacket_VO != 0 || peekedPacket_VI != 0 || peekedPacket_BE != 0 || peekedPacket_BK != 0 )
        {
          return true;
@@ -928,38 +928,38 @@ ApWifiMac::HasPacketsInQueueTo(Mac48Address dest)
          return false;
       }
 }
- 
+
 uint16_t ApWifiMac::RpsIndex = 0;
 void
 ApWifiMac::SetaccessList (std::map<Mac48Address, bool> list)
 {
         Mac48Address stasAddr;
 
-            
+
         if (list.size () == 0)
          {
             return;
          }
-              
+
         for (uint32_t k = 1; k <= m_totalStaNum; k++)
-          {   
+          {
             stasAddr = m_AidToMacAddr.find(k)->second;
             //NS_LOG_UNCOND ( "aid "  << k << ", send " << list.find(stasAddr)->second << ", at " << Simulator::Now () << ", size " << list.size ());
-          }     
-               
+          }
+
         m_edca.find (AC_VO)->second->SetaccessList (list);
         m_edca.find (AC_VI)->second->SetaccessList (list);
         m_edca.find (AC_BE)->second->SetaccessList (list);
         m_edca.find (AC_BK)->second->SetaccessList (list);
 }
 
-  
+
 void
 ApWifiMac::SendOneBeacon (void)
-{  
+{
   NS_LOG_FUNCTION (this);
   WifiMacHeader hdr;
-    
+
   m_lastBeaconTime = Simulator::Now();
 
     if (m_s1gSupported)
@@ -973,7 +973,7 @@ ApWifiMac::SendOneBeacon (void)
       S1gBeaconCompatibility compatibility;
       compatibility.SetBeaconInterval (m_beaconInterval.GetMicroSeconds ());
       beacon.SetBeaconCompatibility (compatibility);
-     
+
       RPS *m_rps;
       if (RpsIndex < m_rpsset.rpsset.size())
          {
@@ -1017,7 +1017,7 @@ ApWifiMac::SendOneBeacon (void)
     {
     	NS_LOG_DEBUG ("***TIM" << (int)m_DTIMCount << "*** starts at " << Simulator::Now().GetSeconds() << " s");
     }
-    
+
       /*
       RPS m_rps;
       NS_LOG_UNCOND ("send beacon at" << Simulator::Now ());
@@ -1026,7 +1026,7 @@ ApWifiMac::SendOneBeacon (void)
       m_receivedAid.clear (); //release storage
       //m_rps = m_S1gRawCtr.GetRPS ();
       beacon.SetRPS (m_rps); */
-      
+
 
     m_DTIMPeriod = m_TIM.GetDTIMPeriod ();
     m_TIM.SetDTIMCount (m_DTIMCount);
@@ -1052,7 +1052,7 @@ ApWifiMac::SendOneBeacon (void)
 	    NS_ASSERT(m_PageSliceNum < m_pageslice.GetPageSliceCount()); //or do not use m_PageSliceNum when it's larger (equal) than slice count.
       }
 
-    
+
     m_PageIndex = m_pageslice.GetPageindex();
     //m_TIM.SetPageIndex (m_PageIndex);
     uint64_t numPagedStas (0);
@@ -1118,21 +1118,21 @@ ApWifiMac::SendOneBeacon (void)
         m_encodedBlock->SetBlockBitmap (m_blockbitmap);
 
         uint8_t subblocklength = 0;
-        uint8_t *  m_subblock; 
+        uint8_t *  m_subblock;
         m_subblock = new uint8_t [8]; //can be released after SetPartialVBitmap
         for (uint16_t j = 0; j <= 7; j++ ) // at most 8 subblock
           {
              if (m_blockbitmap & (1 << j))
              {
                 *m_subblock = HasPacketsToSubBlock (j, m_blockoffset & 0x1f, m_PageIndex);
-                subblocklength++; 
+                subblocklength++;
                 m_subblock++;
              }
           }
         for (uint32_t j = 0; j < subblocklength; j++)
         	m_subblock--;
         m_encodedBlock->SetEncodedInfo(m_subblock, subblocklength);
-             
+
         m_blockoffset++; //actually block id
         NS_ASSERT (m_blockoffset <= m_pageslice.GetBlockOffset () + m_pageslice.GetInformationFieldSize () * 8);
         //block id cannot exceeds the max defined in the page slice  element
@@ -1162,17 +1162,17 @@ ApWifiMac::SendOneBeacon (void)
         m_DTIMCount++;
       }
     //NS_ASSERT (m_DTIMPeriod - m_DTIMCount + m_DTIMOffset == m_DTIMPeriod || (m_DTIMCount == 0 && m_DTIMOffset == 0));
-    
-    //set sleep list, temporary, removed if ps-poll supported 
+
+    //set sleep list, temporary, removed if ps-poll supported
     m_edca.find (AC_VO)->second->SetsleepList (m_sleepList);
     m_edca.find (AC_VI)->second->SetsleepList (m_sleepList);
     m_edca.find (AC_BE)->second->SetsleepList (m_sleepList);
     m_edca.find (AC_BK)->second->SetsleepList (m_sleepList);
-    
-    
-   
-      
-      
+
+
+
+
+
       AuthenticationCtrl  AuthenCtrl;
       AuthenCtrl.SetControlType (false); //centralized
       Ptr<WifiMacQueue> MgtQueue = m_dca->GetQueue ();
@@ -1496,7 +1496,7 @@ ApWifiMac::Receive (Ptr<Packet> packet, const WifiMacHeader *hdr)
 
                 }
 
-                
+
               if (problem)
                 {
                   //One of the Basic Rate set mode is not
@@ -1529,9 +1529,9 @@ ApWifiMac::Receive (Ptr<Packet> packet, const WifiMacHeader *hdr)
                             }
                         }
                     }
-                    
+
                   m_stationManager->RecordWaitAssocTxOk (from);
-                  
+
                   if (m_s1gSupported)
                     {
                       S1gCapabilities s1gcapabilities = assocReq.GetS1gCapabilities ();
