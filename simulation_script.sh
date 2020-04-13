@@ -7,9 +7,11 @@ NumSlot=1
 beaconinterval=102400
 pageSliceLen=1
 bandWidth=1
-distance=200
-time=180
-DataMode="MCS1_0"
+distance=100
+time=120
+payloadSize=10000
+DataMode="MCS1_9"
+TrafficType="tcpipcamera"
 
 pageSliceCount=$(( NumSta/max_sta ))
 mod=$(( NumSta%max_sta ))
@@ -28,14 +30,30 @@ RAWConfigPath="./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot-$beaconi
 
 echo $RAWConfigPath
 
-Name="$bandWidth-MHz-$distance-m-$NumSta-sta-$time-time-$DataMode"
+if [ ! -d ./results/ ]
+then
+    mkdir ./results/
+fi
 
-./waf --run "test --seed=1 --simulationTime=$time --payloadSize=60 --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=1 --pageSliceCount=$pageSliceCount \
---NRawSlotNum=$NumSlot --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --RAWConfigFile=$RAWConfigPath --Name=$Name"
+if [ ! -d ./results/$DataMode ]
+then
+    mkdir ./results/$DataMode
+fi
+
+if [ ! -d ./results/$DataMode/$TrafficType ]
+then
+    mkdir ./results/$DataMode/$TrafficType
+fi
+
+Name="$distance-m-$NumSta-sta-$time-time"
+
+./waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=1 --pageSliceCount=$pageSliceCount \
+--NRawSlotNum=$NumSlot --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name"
 
 echo "Simulation Done"
 
 lastSimulation=$(ls -trh | tail -n 1)
-mv $lastSimulation ./results/$Name.nss
+mv $lastSimulation ./results/$DataMode/$TrafficType/$Name.nss
+
 
 echo $Name
