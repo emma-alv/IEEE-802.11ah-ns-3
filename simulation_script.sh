@@ -63,7 +63,7 @@ Name="$distance-m-$NumSta-sta-$time-time"
 echo "Simulation Done"
 
 lastSimulation=$(ls -trh | tail -n 1)
-mv $lastSimulation ./results/$DataMode/$TrafficType/$Name.nss
+mv $lastSimulation ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
 
 
 echo $Name
