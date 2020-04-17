@@ -9,9 +9,9 @@ pageSliceLen=1
 bandWidth=1
 distance=100
 time=120
-payloadSize=10000
-DataMode="MCS1_9"
-TrafficType="tcpipcamera"
+payloadSize=100
+DataMode="MCS1_0"
+TrafficType="udpecho"
 
 pageSliceCount=$(( NumSta/max_sta ))
 mod=$(( NumSta%max_sta ))
@@ -43,6 +43,16 @@ fi
 if [ ! -d ./results/$DataMode/$TrafficType ]
 then
     mkdir ./results/$DataMode/$TrafficType
+fi
+
+if [ ! -d ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups ]
+then
+    mkdir ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups
+fi
+
+if [ ! -d ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot ]
+then
+    mkdir ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot
 fi
 
 Name="$distance-m-$NumSta-sta-$time-time"
