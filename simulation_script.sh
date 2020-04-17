@@ -2,7 +2,7 @@
 
 max_sta=64
 NumSta=$1
-NRawGroups=1
+NRawGroups=2
 NumSlot=1
 beaconinterval=102400
 pageSliceLen=1
@@ -11,7 +11,7 @@ distance=200
 time=120
 payloadSize=100
 DataMode="MCS1_0"
-TrafficType="tcpipcamera"
+TrafficType="udpecho"
 #tcpipcamera, udpecho
 
 
