@@ -69,7 +69,13 @@ Name="$distance-m-$NumSta-sta-$time-time"
 echo "Simulation Done"
 
 lastSimulation=$(ls -trh | tail -n 1)
-mv $lastSimulation ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
 
+if [[ $lastSimulation == *"$TrafficType"*]]
+then
+    mv $lastSimulation ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
+    echo $Name
+else
+    echo "Error copying results"
+    exit 1
+fi
 
-echo $Name

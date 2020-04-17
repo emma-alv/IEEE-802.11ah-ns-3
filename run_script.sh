@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "Starting simulation"
-tree
-for NumSta in {100..200..100}
+
+for NumSta in {100..1000..100}
   do
      echo "Number of stations $NumSta"
      ./simulation_script.sh $NumSta

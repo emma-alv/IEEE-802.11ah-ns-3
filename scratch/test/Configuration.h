@@ -68,7 +68,7 @@ struct Configuration {
 
 	double totaltraffic = 2;
 
-	string visualizerIP = ""; // empty string if no visualization TODO
+	string visualizerIP = "visualizer"; // empty string if no visualization TODO
 	int visualizerPort = 7707;
 	double visualizerSamplingInterval = 1;
 
