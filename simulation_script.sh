@@ -70,7 +70,7 @@ echo "Simulation Done"
 
 lastSimulation=$(ls -trh | tail -n 1)
 
-if [[ $lastSimulation == *"$TrafficType"*]]
+if [[ $lastSimulation == *"$TrafficType"* ]]
 then
     mv $lastSimulation ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
     echo $Name
