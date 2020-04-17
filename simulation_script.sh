@@ -1,17 +1,19 @@
 #!/bin/bash
 
 max_sta=64
-NumSta=100
+NumSta=$1
 NRawGroups=1
 NumSlot=1
 beaconinterval=102400
 pageSliceLen=1
 bandWidth=1
-distance=100
+distance=200
 time=120
 payloadSize=100
 DataMode="MCS1_0"
-TrafficType="udpecho"
+TrafficType="tcpipcamera"
+#tcpipcamera, udpecho
+
 
 pageSliceCount=$(( NumSta/max_sta ))
 mod=$(( NumSta%max_sta ))
@@ -55,10 +57,14 @@ then
     mkdir ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot
 fi
 
+
+
+
 Name="$distance-m-$NumSta-sta-$time-time"
 
 ./waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=1 --pageSliceCount=$pageSliceCount \
 --NRawSlotNum=$NumSlot --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name"
+
 
 echo "Simulation Done"
 
