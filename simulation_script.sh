@@ -2,8 +2,8 @@
 
 max_sta=64
 NumSta=$1
-NRawGroups=4
-NumSlot=4
+NRawGroups=1
+NumSlot=1
 beaconinterval=102400
 pageSliceLen=1
 bandWidth=1
