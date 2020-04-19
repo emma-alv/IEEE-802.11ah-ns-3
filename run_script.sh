@@ -2,7 +2,7 @@
 
 echo "Starting simulation"
 
-for NumSta in {100..1000..100}
+for NumSta in {1500..2000..500}
   do
      echo "Number of stations $NumSta"
      ./simulation_script.sh $NumSta
