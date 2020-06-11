@@ -63,7 +63,7 @@ fi
 Name="$distance-m-$NumSta-sta-$time-time"
 
 ./waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=$pageSliceLen --pageSliceCount=$pageSliceCount \
---NRawSlotNum=$NumSlot --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name"
+--NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name"
 
 
 echo "Simulation Done"
