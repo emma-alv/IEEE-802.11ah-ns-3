@@ -1,11 +1,11 @@
 #!/bin/bash
 
-max_sta=64
+max_sta=256
 NumSta=$1
 NRawGroups=4
 NumSlot=4
 beaconinterval=102400
-pageSliceLen=1
+pageSliceLen=4
 bandWidth=1
 distance=200
 time=120
