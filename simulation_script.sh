@@ -13,7 +13,7 @@ payloadSize=100
 DataMode="MCS1_0"
 TrafficType="udpecho"
 #tcpipcamera, udpecho
-NOW=$(date +"%F")
+NOW=$(date +"%F_%H_%M_%S")
 
 pageSliceCount=$(( NumSta/max_sta ))
 mod=$(( NumSta%max_sta ))
@@ -35,6 +35,11 @@ echo $RAWConfigPath
 if [ ! -d ./results/ ]
 then
     mkdir ./results/
+fi
+
+if [ ! -d ./results/logs ]
+then
+    mkdir ./results/logs
 fi
 
 if [ ! -d ./results/$DataMode ]
@@ -63,7 +68,7 @@ fi
 Name="$distance-m-$NumSta-sta-$time-time"
 
 ./waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=$pageSliceLen --pageSliceCount=$pageSliceCount \
---NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name" > ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/simlog_$NOW.txt 2>&1
+--NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name" > ./results/logs/simlog_$NOW.txt 2>&1
 
 echo "./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/simlog_$NOW.txt"
 echo "Simulation Done"
