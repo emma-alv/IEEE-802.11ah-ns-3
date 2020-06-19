@@ -70,7 +70,8 @@ Name="$distance-m-$NumSta-sta-$time-time"
 ./waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=$pageSliceLen --pageSliceCount=$pageSliceCount \
 --NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name" > ./results/logs/simlog_$NOW.txt 2>&1
 
-echo "./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/simlog_$NOW.txt"
+echo "RAW PATH = ./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot-$beaconinterval-$pageSliceCount-$pageSliceLen.txt" >> ./results/logs/simlog_$NOW.txt
+echo "./results/logs/simlog_$NOW.txt"
 echo "Simulation Done"
 
 lastSimulation=$(ls -trh | tail -n 1)
