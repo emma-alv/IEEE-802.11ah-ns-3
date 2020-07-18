@@ -40,6 +40,7 @@
 #include "ns3/uinteger.h"
 #include "wifi-mac-queue.h"
 #include <map>
+#include <cmath>
 
 
 
@@ -558,12 +559,14 @@ ApWifiMac::ForwardDown (Ptr<const Packet> packet, Mac48Address from,
 Time
 ApWifiMac::GetSlotStartTimeFromAid (uint16_t aid) const
 {
-	uint8_t block = (aid >> 6 ) & 0x001f;
+  uint8_t block = log2(m_pageslice.GetPageSliceLen() * 64);
+  //uint8_t block = pow(2, (bits - 1));
+	//uint8_t block = (aid >> 8 ) & 0x007f;
 	NS_ASSERT (block >= m_pageslice.GetBlockOffset());
-	uint8_t toTim = 0;
-	//= (block - m_pageslice.GetBlockOffset()) % m_pageslice.GetPageSliceLen(); //TODO make config alignment between TIM and RAW e.g. if AID belongs to TIM0 it cannot belong to RAW located in TIM3
+	uint8_t toTim = (aid >> block);
+	//uint8_t toTim = (block - m_pageslice.GetBlockOffset()) % m_pageslice.GetPageSliceLen(); //TODO make config alignment between TIM and RAW e.g. if AID belongs to TIM0 it cannot belong to RAW located in TIM3
 
-	for (uint32_t i = 0; i < m_pageslice.GetPageSliceCount(); i++)
+	/*for (uint32_t i = 0; i < m_pageslice.GetPageSliceCount(); i++)
 	{
 		if (i == m_pageslice.GetPageSliceCount() - 1)
 		{
@@ -581,9 +584,9 @@ ApWifiMac::GetSlotStartTimeFromAid (uint16_t aid) const
 			}
 		}
 		//if (i * m_pageslice.GetPageSliceLen() <= block && block <= )
-	}
+	}*/
 
-	//std::cout << "aid=" << (int)aid << ", toTim=" << (int)toTim << std::endl;
+	std::cout << "aid=" << (int)aid << ", toTim=" << (int)toTim << ", block=" << (int)block << std::endl;
 	uint16_t raw_len = (*m_rpsset.rpsset.at(toTim)).GetInformationFieldSize();
 
 	uint16_t rawAssignment_len = 6;
@@ -613,11 +616,12 @@ ApWifiMac::GetSlotStartTimeFromAid (uint16_t aid) const
 			x = 1;
 			return start;
 		}
+                std::cout << "Simple breakpoint, RAW index " << (int)raw_index << "RAW number" << (int)RAW_number << std::endl; 
 	}
 	// AIDs that are not assigned to any RAW group can sleep through all the RAW groups
 	// For station that does not belong to anz RAW group, return the time after all RAW groups
-	/*currentRAW_start += (500 + slotDurationCount * 120) * slotNum;
-	NS_LOG_DEBUG ("[aid=" << aid << "] is located outside all RAWs. It can start contending " << currentRAW_start << " us after the beacon.");*/
+	currentRAW_start += (500 + slotDurationCount * 120) * slotNum;
+	NS_LOG_DEBUG ("[aid=" << aid << "] is located outside all RAWs. It can start contending " << currentRAW_start << " us after the beacon.");
 	NS_ASSERT (x);
 	return MicroSeconds (currentRAW_start);
 }
