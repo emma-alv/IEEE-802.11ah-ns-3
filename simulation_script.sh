@@ -1,9 +1,9 @@
 #!/bin/bash
 
-max_sta=64
+max_sta=256
 NumSta=$1
-NRawGroups=1
-NumSlot=1
+NRawGroups=4
+NumSlot=4
 beaconinterval=102400
 pageSliceLen=4
 bandWidth=1
@@ -31,6 +31,7 @@ RAWConfigPath="./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot-$beaconi
 --pageSliceCount=$pageSliceCount --pageSliceLen=$pageSliceLen"
 
 echo $RAWConfigPath
+
 
 if [ ! -d ./results/ ]
 then
@@ -62,7 +63,7 @@ then
     mkdir ./results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot
 fi
 
-
+date
 
 
 Name="$distance-m-$NumSta-sta-$time-time"
@@ -73,6 +74,8 @@ Name="$distance-m-$NumSta-sta-$time-time"
 echo "RAW PATH = ./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot-$beaconinterval-$pageSliceCount-$pageSliceLen.txt" >> ./results/logs/simlog_$NOW.txt
 echo "./results/logs/simlog_$NOW.txt"
 echo "Simulation Done"
+
+date
 
 lastSimulation=$(ls -trh | tail -n 1)
 
