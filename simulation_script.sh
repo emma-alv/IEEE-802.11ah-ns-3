@@ -8,7 +8,7 @@ NumSta=$1
 NRawGroups=4
 NumSlot=4
 beaconinterval=102400
-pageSliceLen=4
+pageSliceLen=$2
 bandWidth=1
 distance=200
 time=120
@@ -16,7 +16,7 @@ payloadSize=100
 DataMode="MCS1_0"
 TrafficType="udpecho"
 #tcpipcamera, udpecho
-NOW=$(date +"%F_%H_%M_%S")
+#NOW=$(date +"%F_%H_%M_%S")
 
 max_sta=$(( pageSliceLen * 64 ))
 
@@ -26,6 +26,11 @@ mod=$(( NumSta%max_sta ))
 if [ $mod != 0 ]
 then
   pageSliceCount=$(( pageSliceCount + 1 ))
+fi
+
+if [ $NumSta -le $max_sta ]
+then
+  pageSliceCount=0
 fi
 
 echo $pageSliceCount
@@ -74,7 +79,7 @@ date
 Name="$distance-m-$NumSta-sta-$time-time"
 
 $path_folder/waf --run "test --seed=1 --simulationTime=$time --payloadSize=$payloadSize --Nsta=$NumSta --pagePeriod=$pageSliceCount --pageSliceLength=$pageSliceLen --pageSliceCount=$pageSliceCount \
---NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name" > $path_folder/results/logs/simlog_$NOW.txt 2>&1
+--NRawSlotNum=$NumSlot --NGroup=$NRawGroups --rho=$distance --bandWidth=$bandWidth --DataMode=$DataMode --TrafficType=$TrafficType --RAWConfigFile=$RAWConfigPath --Name=$Name"
 
 echo "RAW PATH = ./OptimalRawGroup/RawConfig-$NumSta-$NRawGroups-$NumSlot-$beaconinterval-$pageSliceCount-$pageSliceLen.txt" >> $path_folder/results/logs/simlog_$NOW.txt
 echo "./results/logs/simlog_$NOW.txt"
