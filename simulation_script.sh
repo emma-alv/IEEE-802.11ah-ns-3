@@ -16,7 +16,7 @@ payloadSize=100
 DataMode="MCS1_0"
 TrafficType="udpecho"
 #tcpipcamera, udpecho
-#NOW=$(date +"%F_%H_%M_%S")
+NOW=$(date +"%F_%H_%M_%S")
 
 max_sta=$(( pageSliceLen * 64 ))
 
@@ -87,7 +87,7 @@ echo "Simulation Done"
 
 date
 
-lastSimulation=$(ls -trh | tail -n 1)
+lastSimulation=$(ls -trh | grep $TrafficType | tail -n 1)
 
 if [[ $lastSimulation == *"$TrafficType"* ]]
 then
