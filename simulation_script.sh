@@ -4,8 +4,9 @@ user=$( whoami )
 
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
+simType="byRawG"
 NumSta=$1
-NRawGroups=2
+NRawGroups=8
 NumSlot=1
 beaconinterval=102400
 pageSliceLen=$2
@@ -53,24 +54,29 @@ then
     mkdir $path_folder/results/logs
 fi
 
-if [ ! -d $path_folder/results/$DataMode ]
+if [ ! -d $path_folder/results/$simType/$DataMode ]
 then
-    mkdir $path_folder/results/$DataMode
+    mkdir $path_folder/results/$simType/$DataMode
 fi
 
-if [ ! -d $path_folder/results/$DataMode/$TrafficType ]
+if [ ! -d $path_folder/results/$simType/$DataMode ]
 then
-    mkdir $path_folder/results/$DataMode/$TrafficType
+    mkdir $path_folder/results/$simType/$DataMode
 fi
 
-if [ ! -d $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups ]
+if [ ! -d $path_folder/results/$simType/$DataMode/$TrafficType ]
 then
-    mkdir $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups
+    mkdir $path_folder/results/$simType/$DataMode/$TrafficType
 fi
 
-if [ ! -d $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot ]
+if [ ! -d $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups ]
 then
-    mkdir $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot
+    mkdir $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups
+fi
+
+if [ ! -d $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot ]
+then
+    mkdir $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot
 fi
 
 date
@@ -91,8 +97,8 @@ lastSimulation=$(ls -trh | grep $TrafficType | tail -n 1)
 
 if [[ $lastSimulation == *"$TrafficType"* ]]
 then
-    mv $lastSimulation $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
-    head -n 20 $path_folcer/simulation_script.sh >> $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.conf
+    mv $lastSimulation $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
+    head -n 20 $path_folced/simulation_script.sh >> $path_folder/results/$simType/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.conf
     echo $Name
 else
     echo "Error copying results"
