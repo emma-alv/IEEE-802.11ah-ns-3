@@ -5,8 +5,8 @@ user=$( whoami )
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
 NumSta=$1
-NRawGroups=4
-NumSlot=4
+NRawGroups=1
+NumSlot=1
 beaconinterval=102400
 pageSliceLen=$2
 bandWidth=1
@@ -92,6 +92,7 @@ lastSimulation=$(ls -trh | grep $TrafficType | tail -n 1)
 if [[ $lastSimulation == *"$TrafficType"* ]]
 then
     mv $lastSimulation $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.nss
+    head -n 20 $path_folcer/simulation_script.sh >> $path_folder/results/$DataMode/$TrafficType/RAW_G_$NRawGroups/RAW_S_$NumSlot/$Name.conf
     echo $Name
 else
     echo "Error copying results"
