@@ -54,9 +54,9 @@ then
     mkdir $path_folder/results/logs
 fi
 
-if [ ! -d $path_folder/results/$simType/$DataMode ]
+if [ ! -d $path_folder/results/$simType ]
 then
-    mkdir $path_folder/results/$simType/$DataMode
+    mkdir $path_folder/results/$simType
 fi
 
 if [ ! -d $path_folder/results/$simType/$DataMode ]
