@@ -4,9 +4,9 @@ user=$( whoami )
 
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
-simType="bySlotN"
+simType="byRawG"
 NumSta=$1
-NRawGroups=2
+NRawGroups=4
 NumSlot=1
 beaconinterval=102400
 pageSliceLen=$2
