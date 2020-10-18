@@ -4,10 +4,10 @@ user=$( whoami )
 
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
-simType="bySlotN"
+simType="byTrafficType"
 NumSta=$1
-NRawGroups=8
-NumSlot=4
+NRawGroups=2
+NumSlot=1
 beaconinterval=102400
 pageSliceLen=$2
 bandWidth=1
@@ -15,7 +15,7 @@ distance=200
 time=120
 payloadSize=100
 DataMode="MCS1_0"
-TrafficType="udpecho"
+TrafficType="tcpipcamera"
 #tcpipcamera, udpecho
 NOW=$(date +"%F_%H_%M_%S")
 
