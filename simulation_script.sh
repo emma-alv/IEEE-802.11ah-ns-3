@@ -15,7 +15,7 @@ distance=200
 time=120
 payloadSize=100
 DataMode="MCS1_0"
-TrafficType="tcpipcamera"
+TrafficType="udpecho"
 #tcpipcamera, udpecho
 NOW=$(date +"%F_%H_%M_%S")
 
