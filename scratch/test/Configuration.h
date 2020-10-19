@@ -83,7 +83,7 @@ struct Configuration {
 	string folder="./scratch/";
 	string file="./scratch/mac-sta.txt";
 	string TrafficPath="./OptimalRawGroup/traffic/data-32-0.82.txt";
-	bool S1g1MfieldEnabled=false;
+	bool S1g1MfieldEnabled=true;
 	string RAWConfigFile = "./OptimalRawGroup/RawConfig-test.txt";
 	string DataMode = "MCS2_0";
 	string OutputPath = "./OptimalRawGroup/";
