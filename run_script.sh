@@ -4,7 +4,7 @@ rawG=$1
 NumSlot=$2
 
 #numStaArray=(127 255 511 1023 2047)
-numStaArray=(2047)
+numStaArray=(1023)
 echo "Starting simulation"
 
 for NumSta in ${numStaArray[@]}
@@ -23,7 +23,7 @@ for NumSta in ${numStaArray[@]}
           time=150
      ;;
      2047) pageSliceLen=4
-          time=210
+          time=190
      ;;
      esac
      echo "Parameters set $NumSta $rawG $NumSlot $pageSliceLen $time"
