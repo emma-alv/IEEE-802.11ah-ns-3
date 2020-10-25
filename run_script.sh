@@ -1,12 +1,31 @@
 #!/bin/bash
 
+rawG=$1
+NumSlot=$2
+
+#numStaArray=(127 255 511 1023 2047)
+numStaArray=(2047)
 echo "Starting simulation"
 
-for NumSta in {1500..2000..500}
+for NumSta in ${numStaArray[@]}
   do
-     echo "Number of stations $NumSta"
-     ./simulation_script.sh $NumSta
+     case "$NumSta" in
+     127) pageSliceLen=1
+         time=120
+     ;;
+     255) pageSliceLen=2
+         time=120
+     ;;
+     511) pageSliceLen=4
+         time=150
+     ;;
+     1023) pageSliceLen=4
+          time=150
+     ;;
+     2047) pageSliceLen=4
+          time=210
+     ;;
+     esac
+     echo "Parameters set $NumSta $rawG $NumSlot $pageSliceLen $time"
+     ./simulation_script.sh $NumSta $rawG $NumSlot $pageSliceLen $time
  done
-
-echo "Sync with S3 bucket"
-aws s3 sync ./results s3://802.11ah

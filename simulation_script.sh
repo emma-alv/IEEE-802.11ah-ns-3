@@ -6,13 +6,13 @@ path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
 simType="byRawG"
 NumSta=$1
-NRawGroups=1
-NumSlot=1
+NRawGroups=$2
+NumSlot=$3
 beaconinterval=102400
-pageSliceLen=$2
+pageSliceLen=$4
 bandWidth=1
 distance=200
-time=150
+time=$5
 payloadSize=100
 DataMode="MCS1_0"
 TrafficType="udpecho"
