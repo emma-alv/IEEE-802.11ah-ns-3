@@ -4,7 +4,7 @@ rawG=$1
 NumSlot=$2
 
 #numStaArray=(127 255 511 1023 2047)
-numStaArray=(1023)
+numStaArray=(1023 2047)
 echo "Starting simulation"
 
 for NumSta in ${numStaArray[@]}
