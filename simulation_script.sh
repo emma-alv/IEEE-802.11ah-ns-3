@@ -4,14 +4,14 @@ user=$( whoami )
 
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
-simType="byRawG"
+simType="byDistance"
 NumSta=$1
 NRawGroups=$2
 NumSlot=$3
 beaconinterval=102400
 pageSliceLen=$4
 bandWidth=1
-distance=200
+distance=$6
 time=$5
 payloadSize=100
 DataMode="MCS1_0"

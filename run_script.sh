@@ -1,7 +1,8 @@
 #!/bin/bash
 
-rawG=$1
-NumSlot=$2
+rawG=4
+NumSlot=2
+distance=$1
 
 #numStaArray=(127 255 511 1023 2047)
 numStaArray=(1023)
@@ -17,15 +18,15 @@ for NumSta in ${numStaArray[@]}
          time=120
      ;;
      511) pageSliceLen=4
-         time=150
+         time=120
      ;;
      1023) pageSliceLen=4
-          time=150
+          time=120
      ;;
      2047) pageSliceLen=4
-          time=190
+          time=120
      ;;
      esac
-     echo "Parameters set $NumSta $rawG $NumSlot $pageSliceLen $time"
-     ./simulation_script.sh $NumSta $rawG $NumSlot $pageSliceLen $time
+     echo "Parameters set $NumSta $rawG $NumSlot $pageSliceLen $time $distance"
+     ./simulation_script.sh $NumSta $rawG $NumSlot $pageSliceLen $time $distance
  done
