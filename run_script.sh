@@ -5,7 +5,7 @@ NumSlot=2
 distance=$1
 
 #numStaArray=(127 255 511 1023 2047)
-numStaArray=(1023 2047)
+numStaArray=(1023)
 echo "Starting simulation"
 
 for NumSta in ${numStaArray[@]}
