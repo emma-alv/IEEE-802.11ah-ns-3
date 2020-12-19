@@ -4,7 +4,7 @@ user=$( whoami )
 
 path_folder="/home/${user}/IEEE-802.11ah-ns-3"
 
-simType="byDistance"
+simType="DataRate"
 NumSta=$1
 NRawGroups=$2
 NumSlot=$3

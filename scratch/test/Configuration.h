@@ -62,7 +62,7 @@ struct Configuration {
 	uint32_t Nsta;
 	uint32_t BeaconInterval = 102400;
 
-	double datarate = 7.8;
+	double datarate = .3;
 	double bandWidth = 2;
 	string rho="200"; //50
 
